@@ -1,0 +1,5 @@
+appId: com.dotmoovs.dotmoovs
+---
+- launchApp
+- assertVisible: "Move at your own pace."
+- assertNoDefectsWithAI

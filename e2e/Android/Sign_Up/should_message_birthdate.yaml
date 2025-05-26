@@ -1,0 +1,20 @@
+appId: com.dotmoovs.dotmoovs
+name: Should message birthdate
+tags: 
+  - Regressive
+  - Sign Up
+env:
+  NAME: Luc
+onFlowStart:
+  - runFlow: ../../Setup.yaml
+onFlowComplete:
+  - runFlow: ../../Teardown.yaml
+jsEngine: graaljs
+---
+- runScript: ../../PageObject/SignUp.js
+- tapOn: ${output.SignUp.firsTimeBtn}
+- tapOn: ${output.SignUp.nameField}
+- inputText: ${NAME}
+- assertVisible: ${output.SignUp.messageBirthdate}
+- assertWithAI:
+    assertion: Continue button should be grayed out and disabled

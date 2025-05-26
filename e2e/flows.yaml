@@ -1,5 +1,0 @@
-appId: com.dotmoovs.dotmoovs
-onFlowStart:
-  - runFlow: Setup.yaml
----
-- runFlow: Android/Sign_Up/*.yaml

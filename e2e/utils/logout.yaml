@@ -1,0 +1,19 @@
+appId: com.dotmoovs.dotmoovs
+onFlowComplete:
+  - runFlow: ../Teardown.yaml
+jsEngine: graaljs
+---
+- tapOn: "Profile"
+- tapOn:
+    point: "91%,8%"
+- scrollUntilVisible:
+    element:
+      text: "Logout"
+    direction: "DOWN"
+    timeout: 20000
+    speed: 40
+    visibilityPercentage: 60
+    centerElement: false
+- tapOn: "Logout"
+- assertVisible: "Are you sure you want to logout?"
+- tapOn: "Confirm"

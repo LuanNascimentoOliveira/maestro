@@ -1,3 +1,9 @@
 # config.yaml
 flows:
-  - "Android/**"
+  - "Android/**/*"
+
+executionOrder:
+    continueOnFailure: true
+    flowsOrder:
+        - should_create_account_successful.yaml
+        - should_email_already_registered.yaml
