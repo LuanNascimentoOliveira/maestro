@@ -7,10 +7,11 @@ on:
 
 env:
   MAESTRO_FOLDER: e2e/
+  API_TOKEN: ${{ secrets.API_TOKEN }}
 
 jobs:
   android-tests:
-    name: Android Tests
+    name: Android Maestro Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -29,19 +30,22 @@ jobs:
       - name: Install Maestro
         run: |
           curl -Ls "https://get.maestro.mobile.dev" | bash
-          export PATH="$PATH":"$HOME/.maestro/bin"
           echo "$HOME/.maestro/bin" >> $GITHUB_PATH
 
-      - name: Start Emulator & Run Android Tests
+      - name: Start Android Emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 36
+          api-level: 30
           target: google_apis
           arch: x86_64
-          profile: Pixel 6
-          script: |
-            adb install "$APK_PATH"
-            maestro test "$MAESTRO_FOLDER"
+          profile: pixel
+          disable-animations: true
+          script: echo "Android emulator started"
+
+      - name: Run Maestro Android Tests
+        run: |
+          adb devices
+          BACKEND_URL="$BACKEND_URL" API_TOKEN="$API_TOKEN" maestro test "$MAESTRO_FOLDER"
 
   ios-tests:
     name: iOS Maestro Tests
@@ -60,15 +64,14 @@ jobs:
       - name: Install Maestro
         run: |
           curl -Ls "https://get.maestro.mobile.dev" | bash
-          export PATH="$PATH":"$HOME/.maestro/bin"
           echo "$HOME/.maestro/bin" >> $GITHUB_PATH
 
-      - name: Boot iOS Simulator & Install App
+      - name: Start iOS Simulator
         run: |
           xcrun simctl shutdown all || true
           xcrun simctl boot "iPhone 14 Pro"
-          xcrun simctl install booted "$IPA_PATH"
 
-      - name: Run Maestro Tests on iOS
+      - name: Run Maestro iOS Tests
         run: |
-          maestro test "$MAESTRO_FOLDER"
+          xcrun simctl install booted
+          BACKEND_URL="$BACKEND_URL" API_TOKEN="$API_TOKEN" maestro test "$MAESTRO_FOLDER"
