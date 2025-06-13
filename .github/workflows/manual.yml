@@ -10,8 +10,12 @@ env:
 
 jobs:
   android-tests:
-    name: Android˜ Tests
+    name: Android Tests
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        api-level: [21, 23, 29]
+        target: [default, google_apis]
 
     steps:
       - name: Checkout code
@@ -31,16 +35,14 @@ jobs:
           curl -Ls "https://get.maestro.mobile.dev" | bash
           echo "$HOME/.maestro/bin" >> $GITHUB_PATH
 
-      - name: Start Emulator & Run Android Tests
+      - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 30
-          target: google_apis
+          api-level: ${{ matrix.api-level }}
+          target: ${{ matrix.target }}
           arch: x86_64
-          profile: pixel
-          script: |
-            adb install "$APK_PATH"
-            maestro test "$MAESTRO_FOLDER"
+          profile: Nexus 6
+          script: ./gradlew connectedCheck
 
   ios-tests:
     name: iOS Maestro Tests
