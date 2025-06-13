@@ -10,12 +10,8 @@ env:
 
 jobs:
   android-tests:
-    name: Android Tests
+    name: Android˜ Tests
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        api-level: [21, 23, 29]
-        target: [default, google_apis]
 
     steps:
       - name: Checkout code
@@ -26,6 +22,7 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+          cache: 'gradle'
 
       - name: Install Android SDK
         uses: android-actions/setup-android@v3
@@ -33,16 +30,19 @@ jobs:
       - name: Install Maestro
         run: |
           curl -Ls "https://get.maestro.mobile.dev" | bash
+          export PATH="$PATH":"$HOME/.maestro/bin"
           echo "$HOME/.maestro/bin" >> $GITHUB_PATH
 
-      - name: run tests
+      - name: Start Emulator & Run Android Tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: ${{ matrix.api-level }}
-          target: ${{ matrix.target }}
+          api-level: 36
+          target: google_apis
           arch: x86_64
-          profile: Nexus 6
-          script: ./gradlew connectedCheck
+          profile: Pixel 6
+          script: |
+            adb install "$APK_PATH"
+            maestro test "$MAESTRO_FOLDER"
 
   ios-tests:
     name: iOS Maestro Tests
@@ -61,6 +61,7 @@ jobs:
       - name: Install Maestro
         run: |
           curl -Ls "https://get.maestro.mobile.dev" | bash
+          export PATH="$PATH":"$HOME/.maestro/bin"
           echo "$HOME/.maestro/bin" >> $GITHUB_PATH
 
       - name: Boot iOS Simulator & Install App
