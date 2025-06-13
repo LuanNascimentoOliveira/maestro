@@ -1,0 +1,26 @@
+appId: com.dotmoovs.dotmoovs
+name: Date Picker iOS
+env:
+  TIME: 50
+tags: 
+  - Date
+  - iOS
+jsEngine: graaljs
+---
+- runScript: ../../PageObject/SignUp.js
+- repeat:
+    while:
+      true: ${output.SignUp.getCurrentYearText >= output.SignUp.getYearOfReferenceText}
+    times: 50
+    commands:
+      - swipe:
+          from:
+            text: ${output.SignUp.getCurrentYearText}
+          direction: DOWN
+          duration: 1000
+      - evalScript: ${output.SignUp.getCurrentYearText = output.SignUp.getCurrentYearText - 6}
+- tapOn:
+    id: ${output.datePickerHideId}
+- tapOn: ${output.SignUp.getDayId}
+- tapOn:
+    point: 44%,43%

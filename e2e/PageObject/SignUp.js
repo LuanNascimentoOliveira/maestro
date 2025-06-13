@@ -4,8 +4,9 @@
 const date = new Date();
 const day = String(date.getDate()).padStart(2, '0');
 const month = String(date.getMonth() + 1).padStart(2, '0');
-const year = date.getFullYear();
-const currentDate = `${day}/${month}/${year}`;
+const getCurrentYear = date.getFullYear();
+const currentDate = `${day}/${month}/${getCurrentYear}`;
+const getYearOfReference = getCurrentYear - 14;
 
 output.SignUp = {
     firsTimeBtn: 'First time? Get started', 
@@ -34,7 +35,20 @@ output.SignUp = {
     trainerIntroText: "I'm João and I'll be your personal trainer.",
     emailAlreadyInUseText: "This email is already in use!",
     invalidEmailText: "Please enter a valid email address",
-    birthdateText: currentDate,
-    yearText: "android:id/date_picker_header_year",
     messageBirthdate: "You must be at least 13 years old to create an account",
+    getCurrentYearText: getCurrentYear,
+    getYearOfReferenceText: getYearOfReference,
+    getDayId: "15",
+    OkButton: "OK"
   };
+
+
+if (maestro.platform === "ios") {
+    output.birthdateText = "Date Picker",
+    output.yearId = "DatePicker.Show",
+    output.datePickerHideId = "DatePicker.Hide"
+};
+if (maestro.platform === "android") {
+    output.birthdateText = currentDate,
+    output.yearId = "android:id/date_picker_header_year"
+};

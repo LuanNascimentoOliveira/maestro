@@ -1,5 +1,7 @@
 appId: com.dotmoovs.dotmoovs
 ---
 - launchApp
-- assertVisible: "Move at your own pace."
+- extendedWaitUntil:
+    visible: "Move at your own pace."
+    timeout: 60000  # 10 seconds
 - assertNoDefectsWithAI

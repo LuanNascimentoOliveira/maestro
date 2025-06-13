@@ -1,0 +1,19 @@
+appId: com.dotmoovs.dotmoovs
+name: Date Picker Android
+tags: 
+  - Date
+  - Android
+jsEngine: graaljs
+---
+- runScript: ../../PageObject/SignUp.js
+- scrollUntilVisible:
+    element:
+      text: ${output.SignUp.getYearOfReferenceText}
+    direction: UP
+    timeout: 20000
+    speed: 40
+    visibilityPercentage: 60
+    centerElement: false
+- tapOn: ${output.SignUp.getYearOfReferenceText}
+- tapOn: ${output.SignUp.getDayId}
+- tapOn: ${output.SignUp.OkButton}

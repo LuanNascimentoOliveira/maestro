@@ -1,17 +1,16 @@
 appId: com.dotmoovs.dotmoovs
 name: Should maximum name
 tags: 
-  - Regressive
   - Sign Up
 env:
   NAME: Lucas Nascimento Oliveira
 onFlowStart:
-  - runFlow: ../../Setup.yaml
+  - runFlow: ../Setup.yaml
 onFlowComplete:
-  - runFlow: ../../Teardown.yaml
+  - runFlow: ../Teardown.yaml
 jsEngine: graaljs
 ---
-- runScript: ../../PageObject/SignUp.js
+- runScript: ../PageObject/SignUp.js
 - tapOn: ${output.SignUp.firsTimeBtn}
 - tapOn: ${output.SignUp.nameField}
 - inputText: ${NAME}

@@ -1,19 +1,22 @@
 appId: com.dotmoovs.dotmoovs
+.env:
+  
 onFlowComplete:
-  - runFlow: ../Teardown.yaml
+ - runFlow: ../Teardown.yaml
 jsEngine: graaljs
 ---
-- tapOn: "Profile"
+- runScript: ../PageObject/Profile.js
+- tapOn: ${output.profileButton}
 - tapOn:
-    point: "91%,8%"
+    id: ${output.Profile.settingsProfile}
 - scrollUntilVisible:
     element:
-      text: "Logout"
+      text: ${output.Profile.logoutButton}
     direction: "DOWN"
     timeout: 20000
     speed: 40
     visibilityPercentage: 60
     centerElement: false
-- tapOn: "Logout"
-- assertVisible: "Are you sure you want to logout?"
-- tapOn: "Confirm"
+- tapOn: ${output.Profile.logoutButton}
+- assertVisible: ${output.Profile.messageLogout}
+- tapOn: ${output.Profile.confirmLogoutButton}
