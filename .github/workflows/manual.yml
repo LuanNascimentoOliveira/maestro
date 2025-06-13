@@ -10,7 +10,7 @@ env:
 
 jobs:
   android-tests:
-    name: Android Tests
+    name: Android˜ Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -63,7 +63,8 @@ jobs:
 
       - name: Boot iOS Simulator & Install App
         run: |
-          xcrun simctl boot "iPhone 14"
+          xcrun simctl shutdown all || true
+          xcrun simctl boot "iPhone 14 Pro"
           xcrun simctl install booted "$IPA_PATH"
 
       - name: Run Maestro Tests on iOS
