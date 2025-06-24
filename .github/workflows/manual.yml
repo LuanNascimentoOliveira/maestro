@@ -8,3 +8,7 @@ jobs:
   ios-tests:
     name: iOS Maestro Tests
     runs-on: macos-latest
+    steps:
+      - name: Hello World
+        run: echo "Hello, iOS World!"
+   
