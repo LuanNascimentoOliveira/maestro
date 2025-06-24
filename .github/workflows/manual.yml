@@ -3,7 +3,6 @@ name: Maestro E2E Tests (Android & iOS)
 on:
   push:
     branches: [main]
-  pull_request:
 
 jobs:
   ios-tests:
